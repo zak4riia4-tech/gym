@@ -1,4 +1,5 @@
 import { Footer } from "@/components/layout/Footer";
+import { InstallPrompt } from "@/components/layout/InstallPrompt";
 import { MarqueeBand } from "@/components/layout/MarqueeBand";
 import { Navbar } from "@/components/layout/Navbar";
 import { CallToAction } from "@/components/sections/CallToAction";
@@ -84,6 +85,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <InstallPrompt />
     </>
   );
 }

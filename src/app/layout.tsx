@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { ServiceWorker } from "@/components/layout/ServiceWorker";
 import { seo } from "@/content/site";
 import "./globals.css";
 
@@ -50,6 +51,18 @@ export const metadata: Metadata = {
     title: seo.ogTitle,
     description: seo.ogDescription,
   },
+  /* iOS ignores the manifest for these, so they have to be tags. */
+  appleWebApp: {
+    capable: true,
+    title: "IRONHAUS",
+    statusBarStyle: "black-translucent",
+  },
+  other: {
+    /* Next emits the modern `mobile-web-app-capable`. iOS versions before 16.4
+       only recognise the apple-prefixed one, and plenty of phones in this
+       market are older than that, so both are declared. */
+    "apple-mobile-web-app-capable": "yes",
+  },
   robots: {
     index: true,
     follow: true,
@@ -59,8 +72,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   // Matches the page background, so mobile browser chrome does not flash white.
-  themeColor: "#08090B",
+  themeColor: "#0A0908",
   colorScheme: "dark",
+  // Installed as an app, the page must reach into the notch area.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -82,6 +97,7 @@ export default function RootLayout({
           />
         </noscript>
         {children}
+        <ServiceWorker />
       </body>
     </html>
   );

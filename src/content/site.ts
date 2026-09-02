@@ -410,3 +410,19 @@ export const footer = {
   legal: "All rights reserved.",
   builtNote: "Placeholder address and phone number — replace before launch.",
 };
+
+/* ==========================================================================
+   INSTALL PROMPT
+   ========================================================================== */
+
+export const install = {
+  title: "Add to your home screen",
+  body: "Install the site and it opens like an app, full screen and offline.",
+  action: "Install",
+  dismiss: "Dismiss",
+  /* iOS has no install API, so these words are the whole feature there. */
+  iosBefore: "Tap",
+  iosShare: "Share",
+  iosAfter: "then",
+  iosAdd: "Add to Home Screen",
+};

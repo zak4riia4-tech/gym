@@ -35,7 +35,7 @@ export function Button({
         // group/btn lets child icons react to the button's own hover
         "group/btn inline-flex min-h-12 items-center gap-2.5 rounded-[2px]",
         "font-mono text-[12px] uppercase tracking-[0.16em]",
-        "transition-[background-color,color,border-color,box-shadow,transform] duration-300 ease-out-soft",
+        "transition-[background-color,color,border-color,box-shadow,transform] duration-500 ease-gentle",
         "focus-visible:outline-2 focus-visible:outline-offset-[3px]",
         "disabled:pointer-events-none disabled:opacity-50",
         tone === "light" ? "focus-visible:outline-bronze" : "focus-visible:outline-ember",

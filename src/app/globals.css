@@ -7,22 +7,27 @@
    --shadow-card  ->  shadow-card
    ========================================================================== */
 @theme {
-  /* Dark surfaces */
-  --color-void:     #08090B;   /* page background, coldest black */
-  --color-iron:     #121417;   /* raised dark surface (the PRO card) */
-  --color-steel:    #1C2026;   /* hairlines on dark */
+  /* Dark surfaces.
+     Warm-shifted on purpose: a blue-grey black fights the brass accent and
+     makes it look pasted on. Shifting the darks a few points warm lets the
+     accent sit inside the palette rather than on top of it. The steps between
+     void / iron / steel are also wider now, so a card reads as a raised
+     surface instead of a faint rectangle. */
+  --color-void:     #0A0908;   /* page background, warm near-black */
+  --color-iron:     #16130F;   /* raised surface — clearly lighter than void */
+  --color-steel:    #2A2219;   /* hairlines on dark, warm */
 
   /* Light surfaces */
-  --color-chalk:    #F2F0EB;   /* bone — the Membership section background */
-  --color-bone:     #E7E3DA;   /* hairlines on light */
-  --color-graphite: #4A4E54;   /* body text on light  — 7.4:1 contrast */
+  --color-chalk:    #F4F1EA;   /* bone — the Membership section background */
+  --color-bone:     #E8E3D9;   /* hairlines on light */
+  --color-graphite: #4E4A44;   /* body text on light — 7.9:1 contrast */
 
   /* Text on dark */
-  --color-ash:      #8B9099;   /* muted text on dark  — 6.2:1 contrast */
+  --color-ash:      #9C948A;   /* warm muted text on dark — 6.6:1 contrast */
 
   /* The one accent */
   --color-brass:    #C8873A;   /* on dark surfaces */
-  --color-ember:    #E0A85C;   /* brass, hover state */
+  --color-ember:    #E8B673;   /* brass, hover state — brighter and warmer */
   --color-bronze:   #8A5A1E;   /* the accent, darkened for LIGHT surfaces
                                   so it still passes contrast — 5.2:1 */
 
@@ -43,9 +48,15 @@
   --shadow-card-hover: 0 2px 6px rgb(8 9 11 / 0.06), 0 28px 56px -22px rgb(8 9 11 / 0.22);
   --shadow-featured:   0 4px 10px rgb(8 9 11 / 0.12), 0 40px 70px -28px rgb(8 9 11 / 0.45);
   --shadow-brass:      0 12px 32px -14px rgb(200 135 58 / 0.55);
+  /* Lift for dark cards on hover — depth without a hard edge. */
+  --shadow-lift:       0 2px 6px rgb(0 0 0 / 0.35), 0 24px 48px -20px rgb(0 0 0 / 0.65);
 
-  /* Motion */
-  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* Motion.
+     The old curve decelerated too abruptly, which is what made everything feel
+     stiff. These two ease out over a much longer tail: things arrive rather
+     than stop. --ease-out-soft is for entrances, --ease-gentle for hovers. */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-gentle:   cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 @layer base {
@@ -55,7 +66,12 @@
   }
 
   body {
+    /* Not a flat fill: the page itself is lit from the top, so scrolling feels
+       like moving through a space rather than across a sheet. */
     background-color: var(--color-void);
+    background-image: linear-gradient(to bottom, #100D0A 0%, var(--color-void) 38%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--color-chalk);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
@@ -89,10 +105,13 @@
    -------------------------------------------------------------------------- */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(16px);
+  /* Less travel but a much longer, gentler curve, plus a barely-there scale.
+     Moving a short distance slowly reads as calm; moving far quickly reads
+     as abrupt. */
+  transform: translateY(10px) scale(0.995);
   transition:
-    opacity 0.7s var(--ease-out-soft) var(--reveal-delay, 0ms),
-    transform 0.7s var(--ease-out-soft) var(--reveal-delay, 0ms);
+    opacity 1.1s var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform 1.1s var(--ease-out-soft) var(--reveal-delay, 0ms);
 }
 
 [data-reveal="in"] {
@@ -100,13 +119,58 @@
   transform: none;
 }
 
+/* Ambient depth. A single very soft brass wash at the top of a dark section,
+   so the page has a light source instead of being uniformly flat. Purely
+   decorative and never intercepts a click. */
+.u-surface {
+  border: 1px solid rgb(255 240 220 / 0.07);
+  background-image: linear-gradient(to bottom, #1B1711 0%, #131009 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 240 220 / 0.055),
+    0 1px 2px rgb(0 0 0 / 0.4),
+    0 14px 34px -22px rgb(0 0 0 / 0.75);
+  transition:
+    transform 0.7s var(--ease-gentle),
+    border-color 0.7s var(--ease-gentle),
+    box-shadow 0.7s var(--ease-gentle);
+}
+
+.u-surface:hover {
+  border-color: rgb(200 135 58 / 0.42);
+  box-shadow:
+    inset 0 1px 0 rgb(232 182 115 / 0.12),
+    0 2px 8px rgb(0 0 0 / 0.45),
+    0 28px 56px -24px rgb(0 0 0 / 0.85);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .u-surface:hover { transform: translateY(-8px); }
+}
+
+.u-ambient {
+  position: relative;
+  isolation: isolate;
+}
+
+.u-ambient::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 60%;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(65% 90% at 15% -5%, rgb(232 182 115 / 0.10), transparent 60%),
+    radial-gradient(45% 70% at 88% 5%, rgb(200 135 58 / 0.055), transparent 58%);
+}
+
 @keyframes price-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
 
 .price-block {
-  animation: price-in 0.34s var(--ease-out-soft) both;
+  animation: price-in 0.55s var(--ease-out-soft) both;
 }
 
 @keyframes badge-in {
@@ -115,7 +179,7 @@
 }
 
 .save-badge {
-  animation: badge-in 0.3s var(--ease-out-soft) both;
+  animation: badge-in 0.45s var(--ease-out-soft) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -139,10 +203,10 @@
   opacity: 0;
   transform: translateY(14px) scale(0.985);
   transition:
-    opacity 0.32s var(--ease-out-soft),
-    transform 0.32s var(--ease-out-soft),
-    overlay 0.32s var(--ease-out-soft) allow-discrete,
-    display 0.32s var(--ease-out-soft) allow-discrete;
+    opacity 0.45s var(--ease-out-soft),
+    transform 0.45s var(--ease-out-soft),
+    overlay 0.45s var(--ease-out-soft) allow-discrete,
+    display 0.45s var(--ease-out-soft) allow-discrete;
 }
 
 .booking-dialog[open] {
@@ -160,9 +224,9 @@
 .booking-dialog::backdrop {
   background-color: rgb(8 9 11 / 0);
   transition:
-    background-color 0.32s var(--ease-out-soft),
-    overlay 0.32s var(--ease-out-soft) allow-discrete,
-    display 0.32s var(--ease-out-soft) allow-discrete;
+    background-color 0.45s var(--ease-out-soft),
+    overlay 0.45s var(--ease-out-soft) allow-discrete,
+    display 0.45s var(--ease-out-soft) allow-discrete;
 }
 
 .booking-dialog[open]::backdrop {

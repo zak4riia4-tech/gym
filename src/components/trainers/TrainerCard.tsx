@@ -45,8 +45,8 @@ export function TrainerCard({ trainer, onViewProfile }: TrainerCardProps) {
             "object-cover",
             // Desaturated by default so four different photos read as one set,
             // then full colour on hover. Also a slow, small zoom.
-            "grayscale-[65%] contrast-[1.05] transition-[filter,transform] duration-700 ease-out-soft",
-            "group-hover:grayscale-0 motion-safe:group-hover:scale-[1.04]",
+            "grayscale-[60%] contrast-[1.04] transition-[filter,transform] duration-[1100ms] ease-gentle",
+            "group-hover:grayscale-0 motion-safe:group-hover:scale-[1.05]",
           ].join(" ")}
         />
         ) : null}

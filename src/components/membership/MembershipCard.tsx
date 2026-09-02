@@ -33,19 +33,19 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
       aria-labelledby={headingId}
       className={cn(
         "group relative flex h-full flex-col overflow-hidden rounded-[2px] p-8 md:p-9",
-        "transition-[transform,box-shadow,border-color] duration-500 ease-out-soft",
+        "transition-[transform,box-shadow,border-color] duration-700 ease-gentle",
         // hairline that draws across the top edge on hover
-        "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left before:bg-brass before:transition-transform before:duration-500 before:ease-out-soft before:content-['']",
+        "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left before:bg-brass before:transition-transform before:duration-700 before:ease-out-soft before:content-['']",
         featured
           ? cn(
               "border border-white/10 bg-gradient-to-b from-iron to-void text-chalk shadow-featured",
               "before:scale-x-100",
-              "lg:-translate-y-3 motion-safe:lg:hover:-translate-y-5",
+              "lg:-translate-y-3 motion-safe:lg:hover:-translate-y-6",
             )
           : cn(
               "border border-void/10 bg-white text-void shadow-card",
               "before:scale-x-0 hover:before:scale-x-100",
-              "hover:border-bronze/35 hover:shadow-card-hover motion-safe:hover:-translate-y-1.5",
+              "hover:border-bronze/40 hover:shadow-card-hover motion-safe:hover:-translate-y-2",
             ),
       )}
     >

@@ -28,20 +28,23 @@ export function ProgramCard({ program, onExplore }: ProgramCardProps) {
     <article
       aria-labelledby={headingId}
       className={[
-        "group relative flex h-full flex-col rounded-[2px] border border-steel bg-iron p-7",
-        "transition-[transform,border-color,background-color] duration-500 ease-out-soft",
-        "hover:border-brass/40 hover:bg-[#161a1f] motion-safe:hover:-translate-y-1.5",
+        // A faint top-to-bottom gradient rather than a flat fill: the card
+        // catches the section's light at its top edge, which is what stops it
+        // reading as a plain rectangle.
+        // u-surface carries the border, gradient, inner top highlight and the
+        // hover lift, so every raised card on the site behaves identically.
+        "u-surface group relative flex h-full flex-col rounded-[2px] p-7",
         // the brass hairline that draws across the top — same motif as the plan cards
         "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left before:scale-x-0",
-        "before:bg-brass before:transition-transform before:duration-500 before:ease-out-soft",
+        "before:bg-brass before:transition-transform before:duration-700 before:ease-out-soft",
         "before:content-[''] hover:before:scale-x-100",
       ].join(" ")}
     >
       <span
         className={[
           "inline-flex size-12 items-center justify-center rounded-[2px] border border-steel text-brass",
-          "transition-[border-color,background-color] duration-500 ease-out-soft",
-          "group-hover:border-brass/50 group-hover:bg-brass/10",
+          "transition-[border-color,background-color,color] duration-500 ease-gentle",
+          "group-hover:border-brass/60 group-hover:bg-brass/15 group-hover:text-ember",
         ].join(" ")}
       >
         <Icon aria-hidden="true" className="size-5" />

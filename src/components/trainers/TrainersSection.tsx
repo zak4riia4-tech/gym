@@ -22,7 +22,7 @@ export function TrainersSection({ trainers }: { trainers: TrainerRow[] }) {
     <section
       id="trainers"
       aria-labelledby="trainers-heading"
-      className="scroll-mt-24 u-ambient bg-void py-16 md:py-28 lg:py-40"
+      className="scroll-mt-24 u-ambient py-16 md:py-28 lg:py-40"
     >
       <Container>
         <Reveal>

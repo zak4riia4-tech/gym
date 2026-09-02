@@ -14,7 +14,8 @@ import { heroMedia, programs, seo } from "@/content/site";
  * other's way, so both can be read.
  */
 export async function Hero() {
-  const [trainers, { dict }] = await Promise.all([getActiveTrainers(), getServerI18n()]);
+  const { dict, locale } = await getServerI18n();
+  const trainers = await getActiveTrainers(locale);
   const hero = dict.hero;
 
   return (

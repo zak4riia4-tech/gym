@@ -21,7 +21,7 @@ export async function Gallery() {
     <section
       id="gallery"
       aria-labelledby="gallery-heading"
-      className="u-ambient scroll-mt-24 bg-void py-16 md:py-28 lg:py-40"
+      className="u-ambient scroll-mt-24 py-16 md:py-28 lg:py-40"
     >
       <Container>
         <Reveal>

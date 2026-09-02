@@ -1,4 +1,5 @@
 import { MembershipSection } from "@/components/membership/MembershipSection";
+import { getServerI18n } from "@/lib/i18n/server";
 import { getActivePlans } from "@/lib/content/public-content";
 
 /**
@@ -7,6 +8,7 @@ import { getActivePlans } from "@/lib/content/public-content";
  * because it owns the billing toggle and the booking dialog.
  */
 export async function Membership() {
-  const plans = await getActivePlans();
+  const { locale } = await getServerI18n();
+  const plans = await getActivePlans(locale);
   return <MembershipSection plans={plans} />;
 }

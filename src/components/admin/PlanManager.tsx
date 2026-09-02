@@ -10,7 +10,8 @@ import {
   EmptyState,
   Toast,
 } from "@/components/admin/AdminPrimitives";
-import { SelectField, TextAreaField, TextField } from "@/components/ui/Field";
+import { TranslationFields, type TranslationDraft } from "@/components/admin/TranslationFields";
+import { TextAreaField, TextField } from "@/components/ui/Field";
 import { getAdminBrowserClient } from "@/lib/supabase/browser";
 import { toSlug } from "@/lib/content/format";
 import { site } from "@/content/site";
@@ -30,6 +31,7 @@ type Draft = {
   is_recommended: boolean;
   is_active: boolean;
   sort_order: string;
+  translations: TranslationDraft;
 };
 
 type Errors = Partial<Record<keyof Draft, string>>;
@@ -45,6 +47,7 @@ const EMPTY: Draft = {
   is_recommended: false,
   is_active: true,
   sort_order: "0",
+  translations: {},
 };
 
 function toDraft(plan: MembershipPlanRow): Draft {
@@ -59,7 +62,38 @@ function toDraft(plan: MembershipPlanRow): Draft {
     is_recommended: plan.is_recommended,
     is_active: plan.is_active,
     sort_order: String(plan.sort_order),
+    /* features is stored as an array but edited as lines, so it is flattened
+       here and split again on save. */
+    translations: Object.fromEntries(
+      Object.entries(plan.translations ?? {}).map(([locale, fields]) => [
+        locale,
+        Object.fromEntries(
+          Object.entries(fields as Record<string, unknown>).map(([k, v]) => [
+            k,
+            Array.isArray(v) ? v.join("\n") : String(v ?? ""),
+          ]),
+        ),
+      ]),
+    ),
   };
+}
+
+/** Blank fields are dropped so the public site falls back to English. */
+function packTranslations(draft: TranslationDraft) {
+  const out: Record<string, Record<string, string | string[]>> = {};
+  for (const [locale, fields] of Object.entries(draft)) {
+    const kept: Record<string, string | string[]> = {};
+    for (const [key, raw] of Object.entries(fields)) {
+      const value = raw.trim();
+      if (!value) continue;
+      kept[key] =
+        key === "features"
+          ? value.split("\n").map((f) => f.trim()).filter(Boolean)
+          : value;
+    }
+    if (Object.keys(kept).length > 0) out[locale] = kept;
+  }
+  return out;
 }
 
 /** Mirrors the CHECK constraints in the migration. */
@@ -153,6 +187,7 @@ export function PlanManager({ initialPlans }: { initialPlans: MembershipPlanRow[
       is_recommended: draft.is_recommended,
       is_active: draft.is_active,
       sort_order: Number(draft.sort_order),
+      translations: packTranslations(draft.translations),
     };
 
     const query = editing
@@ -437,6 +472,19 @@ export function PlanManager({ initialPlans }: { initialPlans: MembershipPlanRow[
                 </label>
               ))}
             </div>
+
+            <TranslationFields
+              idPrefix="plan"
+              disabled={saving}
+              value={draft.translations}
+              onChange={(next) => set("translations", next)}
+              fields={[
+                { key: "name", label: "Plan name" },
+                { key: "inherits", label: "Builds on plan" },
+                { key: "description", label: "Description", long: true },
+                { key: "features", label: "Features, one per line", list: true },
+              ]}
+            />
 
             <div className={cn("mt-8 flex flex-wrap gap-3")}>
               <AdminButton variant="primary" busy={saving} disabled={saving} onClick={save}>

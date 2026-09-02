@@ -23,7 +23,7 @@ export function Programs() {
     <section
       id="programs"
       aria-labelledby="programs-heading"
-      className="scroll-mt-24 u-ambient bg-void py-16 md:py-28 lg:py-40"
+      className="scroll-mt-24 u-ambient py-16 md:py-28 lg:py-40"
     >
       <Container>
         <Reveal>

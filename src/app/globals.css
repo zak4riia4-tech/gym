@@ -104,9 +104,8 @@
     /* Not a flat fill: the page itself is lit from the top, so scrolling feels
        like moving through a space rather than across a sheet. */
     background-color: var(--color-void);
-    background-image: linear-gradient(to bottom, #100D0A 0%, var(--color-void) 38%);
+    background-image: linear-gradient(to bottom, #100D0A 0%, var(--color-void) 900px);
     background-repeat: no-repeat;
-    background-attachment: fixed;
     color: var(--color-chalk);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
@@ -308,13 +307,30 @@ body::after {
 .u-ambient::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 60%;
+  inset: 0;
   pointer-events: none;
   z-index: -1;
   background:
-    radial-gradient(65% 90% at 15% -5%, rgb(232 182 115 / 0.10), transparent 60%),
-    radial-gradient(45% 70% at 88% 5%, rgb(200 135 58 / 0.055), transparent 58%);
+    radial-gradient(65% 55% at 15% 8%, rgb(232 182 115 / 0.11), transparent 62%),
+    radial-gradient(45% 42% at 88% 14%, rgb(200 135 58 / 0.06), transparent 60%);
+  /* The wash used to start at full strength on the section's very first pixel,
+     which put a hard horizontal line at every boundary — the seam you can see
+     when scrolling. Masking it to zero at both ends means the light fades in
+     and out inside the section and the joins disappear. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 22%,
+    #000 62%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 22%,
+    #000 62%,
+    transparent 100%
+  );
 }
 
 @keyframes price-in {

@@ -1,5 +1,7 @@
 import { cache } from "react";
 import { getPublicSupabase } from "@/lib/supabase/public";
+import { localizePlan, localizeTrainer } from "./localize";
+import type { Locale } from "@/lib/i18n/config";
 import type { MembershipPlanRow, TrainerRow } from "@/lib/supabase/types";
 
 /*
@@ -12,7 +14,7 @@ import type { MembershipPlanRow, TrainerRow } from "@/lib/supabase/types";
 
 /* cache() memoises per request, so the Hero and the Membership section asking
    for plans in the same render produces ONE database round trip, not two. */
-export const getActivePlans = cache(async (): Promise<MembershipPlanRow[]> => {
+export const getActivePlans = cache(async (locale: Locale): Promise<MembershipPlanRow[]> => {
   const { data, error } = await getPublicSupabase()
     .from("membership_plans")
     .select("*")
@@ -23,10 +25,10 @@ export const getActivePlans = cache(async (): Promise<MembershipPlanRow[]> => {
     console.error("[public] could not load membership plans", error);
     return [];
   }
-  return data ?? [];
+  return (data ?? []).map((plan) => localizePlan(plan, locale));
 });
 
-export const getActiveTrainers = cache(async (): Promise<TrainerRow[]> => {
+export const getActiveTrainers = cache(async (locale: Locale): Promise<TrainerRow[]> => {
   const { data, error } = await getPublicSupabase()
     .from("trainers")
     .select("*")
@@ -37,5 +39,5 @@ export const getActiveTrainers = cache(async (): Promise<TrainerRow[]> => {
     console.error("[public] could not load trainers", error);
     return [];
   }
-  return data ?? [];
+  return (data ?? []).map((trainer) => localizeTrainer(trainer, locale));
 });

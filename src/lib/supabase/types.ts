@@ -13,6 +13,8 @@ export type MembershipPlanRow = {
   is_recommended: boolean;
   is_active: boolean;
   sort_order: number;
+  /** Per-locale overrides, keyed by locale code. Missing keys fall back. */
+  translations: Record<string, Record<string, unknown>>;
 };
 
 export type MembershipPlanInsert = Omit<MembershipPlanRow, "id" | "created_at">;
@@ -30,6 +32,8 @@ export type TrainerRow = {
   facebook_url: string | null;
   is_active: boolean;
   sort_order: number;
+  /** Per-locale overrides, keyed by locale code. Missing keys fall back. */
+  translations: Record<string, Record<string, unknown>>;
 };
 
 export type TrainerInsert = Omit<TrainerRow, "id" | "created_at">;

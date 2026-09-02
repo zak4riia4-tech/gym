@@ -11,6 +11,7 @@ import {
   EmptyState,
   Toast,
 } from "@/components/admin/AdminPrimitives";
+import { TranslationFields, type TranslationDraft } from "@/components/admin/TranslationFields";
 import { TextAreaField, TextField } from "@/components/ui/Field";
 import { getAdminBrowserClient } from "@/lib/supabase/browser";
 import type { TrainerRow } from "@/lib/supabase/types";
@@ -30,6 +31,7 @@ type Draft = {
   facebook_url: string;
   is_active: boolean;
   sort_order: string;
+  translations: TranslationDraft;
 };
 
 type Errors = Partial<Record<keyof Draft, string>>;
@@ -45,6 +47,7 @@ const EMPTY: Draft = {
   facebook_url: "",
   is_active: true,
   sort_order: "0",
+  translations: {},
 };
 
 function toDraft(t: TrainerRow): Draft {
@@ -59,7 +62,29 @@ function toDraft(t: TrainerRow): Draft {
     facebook_url: t.facebook_url ?? "",
     is_active: t.is_active,
     sort_order: String(t.sort_order),
+    translations: Object.fromEntries(
+      Object.entries(t.translations ?? {}).map(([locale, fields]) => [
+        locale,
+        Object.fromEntries(
+          Object.entries(fields as Record<string, unknown>).map(([k, v]) => [k, String(v ?? "")]),
+        ),
+      ]),
+    ),
   };
+}
+
+/** Blank fields are dropped so the public site falls back to English. */
+function packTranslations(draft: TranslationDraft) {
+  const out: Record<string, Record<string, string>> = {};
+  for (const [locale, fields] of Object.entries(draft)) {
+    const kept: Record<string, string> = {};
+    for (const [key, raw] of Object.entries(fields)) {
+      const value = raw.trim();
+      if (value) kept[key] = value;
+    }
+    if (Object.keys(kept).length > 0) out[locale] = kept;
+  }
+  return out;
 }
 
 function validate(draft: Draft): Errors {
@@ -225,6 +250,7 @@ export function TrainerManager({ initialTrainers }: { initialTrainers: TrainerRo
       facebook_url: draft.facebook_url.trim() || null,
       is_active: draft.is_active,
       sort_order: Number(draft.sort_order),
+      translations: packTranslations(draft.translations),
     };
 
     const query = editing
@@ -538,6 +564,20 @@ export function TrainerManager({ initialTrainers }: { initialTrainers: TrainerRo
                 </span>
               </span>
             </label>
+
+            <TranslationFields
+              idPrefix="trainer"
+              disabled={saving}
+              value={draft.translations}
+              onChange={(next) => set("translations", next)}
+              fields={[
+                { key: "full_name", label: "Full name" },
+                { key: "specialty", label: "Specialty" },
+                { key: "experience", label: "Experience" },
+                { key: "certification", label: "Certification" },
+                { key: "bio", label: "Short bio", long: true },
+              ]}
+            />
 
             <div className="mt-8 flex flex-wrap gap-3">
               <AdminButton variant="primary" busy={saving} disabled={saving} onClick={save}>

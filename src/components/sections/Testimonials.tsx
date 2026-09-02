@@ -1,6 +1,5 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { testimonials, testimonialsSection } from "@/content/site";
 
 /**
@@ -21,13 +20,20 @@ export function Testimonials() {
       className="scroll-mt-24 bg-chalk py-24 md:py-32 lg:py-40"
     >
       <Container>
+        {/* Centred and larger than the other section headings — the page has
+            made its argument by now, and this is the evidence. */}
         <Reveal>
-          <SectionHeading
-            id="testimonials-heading"
-            tone="light"
-            eyebrow={testimonialsSection.eyebrow}
-            title={testimonialsSection.title}
-          />
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-bronze">
+              {testimonialsSection.eyebrow}
+            </p>
+            <h2
+              id="testimonials-heading"
+              className="u-display mt-6 text-[clamp(2.25rem,6vw,4.25rem)] font-extrabold uppercase leading-[0.92] text-void"
+            >
+              {testimonialsSection.title}
+            </h2>
+          </div>
         </Reveal>
 
         <div className="mt-14 grid gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-10">

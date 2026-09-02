@@ -29,8 +29,14 @@ export function Gallery() {
             description={gallerySection.description}
           />
         </Reveal>
+      </Container>
 
-        <div className="mt-14 grid auto-rows-[13rem] grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 md:auto-rows-[11rem] lg:mt-20 lg:auto-rows-[13rem] lg:gap-4">
+      {/* Deliberately outside the container: the photographs run to both edges
+          of the screen while every other section stays inside the measure.
+          That single break is what stops the page reading as one long column. */}
+      <div className="px-2 lg:px-3">
+
+        <div className="mt-14 grid auto-rows-[13rem] grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 md:auto-rows-[12rem] lg:mt-20 lg:auto-rows-[15rem] lg:gap-3">
           {galleryImages.map((image, index) => (
             <Reveal
               key={image.src}
@@ -53,7 +59,7 @@ export function Gallery() {
             </Reveal>
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

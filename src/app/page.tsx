@@ -1,4 +1,5 @@
 import { Footer } from "@/components/layout/Footer";
+import { MarqueeBand } from "@/components/layout/MarqueeBand";
 import { Navbar } from "@/components/layout/Navbar";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { Gallery } from "@/components/sections/Gallery";
@@ -74,6 +75,7 @@ export default function Home() {
         <Hero />
         <WhyChooseUs />
         <Programs />
+        <MarqueeBand />
         <Membership />
         <Trainers />
         <Gallery />

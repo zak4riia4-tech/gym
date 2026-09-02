@@ -26,7 +26,7 @@ export function SectionHeading({
     <div className={cn("max-w-xl", className)}>
       <p
         className={cn(
-          "font-mono text-[11px] uppercase tracking-[0.22em]",
+          "font-mono text-[11px] uppercase tracking-[0.24em]",
           light ? "text-bronze" : "text-brass",
         )}
       >
@@ -36,7 +36,7 @@ export function SectionHeading({
       <h2
         id={id}
         className={cn(
-          "u-display mt-5 text-[clamp(2rem,5vw,3.5rem)] font-extrabold uppercase leading-[0.95]",
+          "u-display mt-6 text-[clamp(2.15rem,5.5vw,4rem)] font-extrabold uppercase leading-[0.93]",
           light ? "text-void" : "text-chalk",
         )}
       >

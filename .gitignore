@@ -12,3 +12,5 @@ next-env.d.ts
 .supabase-db-password.txt
 supabase/.temp
 ADMIN_CREDENTIALS.local.txt
+
+.vercel

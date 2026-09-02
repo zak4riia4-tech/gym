@@ -1,3 +1,4 @@
+import { getServerI18n } from "@/lib/i18n/server";
 import { programs, site } from "@/content/site";
 
 /**
@@ -9,8 +10,13 @@ import { programs, site } from "@/content/site";
  * type is outlined rather than filled and the whole strip is hidden from
  * screen readers.
  */
-export function MarqueeBand() {
-  const words = [site.brand.name, ...programs.map((p) => p.name), site.brand.city];
+export async function MarqueeBand() {
+  const { dict } = await getServerI18n();
+  const words = [
+    site.brand.name,
+    ...programs.map((p) => dict.programs.items[p.id].name),
+    site.brand.city,
+  ];
 
   return (
     <div

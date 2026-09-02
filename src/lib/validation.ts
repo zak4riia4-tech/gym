@@ -1,3 +1,4 @@
+import type { Dictionary } from "@/content/i18n/en";
 import type { PlanId } from "@/content/site";
 
 export type BookingFormValues = {
@@ -42,36 +43,39 @@ export function validateBooking(
   values: BookingFormValues,
   /** Slugs currently on sale. Passed in because plans are editable now. */
   validPlanSlugs: readonly string[],
+  /** Messages in the visitor's language. Passed in so this stays pure and
+      usable from both the browser and the server action. */
+  m: Dictionary["booking"]["errors"],
 ): BookingFormErrors {
   const errors: BookingFormErrors = {};
 
   const fullName = values.fullName.trim();
-  if (!fullName) errors.fullName = "Enter your full name.";
-  else if (fullName.length < 2) errors.fullName = "That name looks too short.";
-  else if (fullName.length > 100) errors.fullName = "Keep the name under 100 characters.";
+  if (!fullName) errors.fullName = m.nameRequired;
+  else if (fullName.length < 2) errors.fullName = m.nameShort;
+  else if (fullName.length > 100) errors.fullName = m.nameLong;
 
   const email = values.email.trim();
-  if (!email) errors.email = "Enter your email address.";
-  else if (!EMAIL_PATTERN.test(email)) errors.email = "That email address is not valid.";
-  else if (email.length > 254) errors.email = "That email address is too long.";
+  if (!email) errors.email = m.emailRequired;
+  else if (!EMAIL_PATTERN.test(email)) errors.email = m.emailInvalid;
+  else if (email.length > 254) errors.email = m.emailLong;
 
   const phone = values.phoneNumber.trim();
-  if (!phone) errors.phoneNumber = "Enter a phone number we can reach you on.";
-  else if (!PHONE_PATTERN.test(phone)) errors.phoneNumber = "Enter a valid phone number, e.g. 0750 123 4567.";
+  if (!phone) errors.phoneNumber = m.phoneRequired;
+  else if (!PHONE_PATTERN.test(phone)) errors.phoneNumber = m.phoneInvalid;
 
-  if (!values.membershipPlan) errors.membershipPlan = "Choose a membership plan.";
+  if (!values.membershipPlan) errors.membershipPlan = m.planRequired;
   else if (!validPlanSlugs.includes(values.membershipPlan)) {
-    errors.membershipPlan = "Choose a valid membership plan.";
+    errors.membershipPlan = m.planInvalid;
   }
 
   if (!values.preferredStartDate) {
-    errors.preferredStartDate = "Choose when you would like to start.";
+    errors.preferredStartDate = m.dateRequired;
   } else if (values.preferredStartDate < todayIso()) {
-    errors.preferredStartDate = "Pick today or a later date.";
+    errors.preferredStartDate = m.datePast;
   }
 
-  if (values.fitnessGoal.length > 120) errors.fitnessGoal = "That goal is too long.";
-  if (values.message.length > 2000) errors.message = "Keep the message under 2000 characters.";
+  if (values.fitnessGoal.length > 120) errors.fitnessGoal = m.goalLong;
+  if (values.message.length > 2000) errors.message = m.messageLong;
 
   return errors;
 }

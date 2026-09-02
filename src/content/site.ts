@@ -63,11 +63,10 @@ export const membership = {
 export type ProgramIcon = "dumbbell" | "flame" | "growth" | "movement";
 
 export type Program = {
-  id: string;
-  name: string;
-  description: string;
-  difficulty: string;
-  duration: string;
+  /** Matches a key under programs.items in every dictionary. */
+  id: "strength" | "weight-loss" | "muscle-building" | "functional";
+  /** Minutes. The unit is translated, so it is not baked into the value. */
+  durationMinutes: number;
   icon: ProgramIcon;
 };
 
@@ -82,38 +81,22 @@ export const programsSection = {
 export const programs: Program[] = [
   {
     id: "strength",
-    name: "Strength Training",
-    description:
-      "Barbell work built on the big lifts. Squat, press and deadlift, loaded properly and progressed every week.",
-    difficulty: "Intermediate",
-    duration: "60 min",
+    durationMinutes: 60,
     icon: "dumbbell",
   },
   {
     id: "weight-loss",
-    name: "Weight Loss",
-    description:
-      "Conditioning circuits paired with a food plan you can keep. Steady and measured, with no crash weeks.",
-    difficulty: "All levels",
-    duration: "45 min",
+    durationMinutes: 45,
     icon: "flame",
   },
   {
     id: "muscle-building",
-    name: "Muscle Building",
-    description:
-      "Hypertrophy blocks with tracked volume. Enough work to grow, enough rest to actually recover from it.",
-    difficulty: "Intermediate",
-    duration: "75 min",
+    durationMinutes: 75,
     icon: "growth",
   },
   {
     id: "functional",
-    name: "Functional Training",
-    description:
-      "Carry, hinge, push, pull. Movement that transfers to work, to sport and to everything outside the gym.",
-    difficulty: "Beginner",
-    duration: "50 min",
+    durationMinutes: 50,
     icon: "movement",
   },
 ];
@@ -242,7 +225,7 @@ export const nav = {
   closeMenu: "Close menu",
 };
 
-export const hero = {
+export const heroMedia = {
   eyebrow: "Hewlêr · Est. 2019",
   /* Three lines, set one per line in the wide display face. Anti-hype on
      purpose: the whole brand voice is about turning up, not about slogans. */

@@ -46,7 +46,7 @@ export function Ledger({
           </dt>
           <dd
             className={cn(
-              "text-right font-mono text-[11px] uppercase tracking-[0.1em]",
+              "text-end font-mono text-[11px] uppercase tracking-[0.1em]",
               light ? "text-void" : "text-chalk",
             )}
           >

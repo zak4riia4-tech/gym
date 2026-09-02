@@ -3,7 +3,8 @@
 import { ArrowRight, Dumbbell, Flame, Move, TrendingUp, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Ledger } from "@/components/ui/Ledger";
-import { programsSection, type Program, type ProgramIcon } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import type { Program, ProgramIcon } from "@/content/site";
 
 /* The data file stores an icon KEY ("dumbbell"). This map turns that key into
    a real component. TypeScript's Record forces every key to have an icon, so
@@ -21,6 +22,9 @@ type ProgramCardProps = {
 };
 
 export function ProgramCard({ program, onExplore }: ProgramCardProps) {
+  const { dict } = useI18n();
+  // Programme copy is translated; the id, icon and duration are structure.
+  const copy = dict.programs.items[program.id as keyof typeof dict.programs.items];
   const Icon = PROGRAM_ICONS[program.icon];
   const headingId = `program-${program.id}`;
 
@@ -35,7 +39,7 @@ export function ProgramCard({ program, onExplore }: ProgramCardProps) {
         // hover lift, so every raised card on the site behaves identically.
         "u-surface group relative flex h-full flex-col rounded-[2px] p-7",
         // the brass hairline that draws across the top — same motif as the plan cards
-        "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left before:scale-x-0",
+        "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left rtl:before:origin-right before:scale-x-0",
         "before:bg-brass before:transition-transform before:duration-700 before:ease-out-soft",
         "before:content-[''] hover:before:scale-x-100",
       ].join(" ")}
@@ -54,10 +58,10 @@ export function ProgramCard({ program, onExplore }: ProgramCardProps) {
         id={headingId}
         className="u-display mt-6 text-[19px] font-extrabold uppercase tracking-[0.03em] text-chalk"
       >
-        {program.name}
+        {copy.name}
       </h3>
 
-      <p className="mt-3 text-[15px] leading-relaxed text-ash">{program.description}</p>
+      <p className="mt-3 text-[15px] leading-relaxed text-ash">{copy.description}</p>
 
       {/* Difficulty and duration as a spec sheet, not a sentence.
           mt-auto pins this block to the bottom of the card, so the spec sheets
@@ -66,8 +70,8 @@ export function ProgramCard({ program, onExplore }: ProgramCardProps) {
       <div className="mt-auto pt-6">
         <Ledger
           items={[
-            { label: "Difficulty", value: program.difficulty },
-            { label: "Duration", value: program.duration },
+            { label: dict.programs.difficulty, value: copy.difficulty },
+            { label: dict.programs.duration, value: program.durationMinutes + " " + dict.programs.minutes },
           ]}
         />
 
@@ -77,8 +81,8 @@ export function ProgramCard({ program, onExplore }: ProgramCardProps) {
           tone="dark"
           onClick={() => onExplore(program.id)}
         >
-          {programsSection.cta}
-          <span className="sr-only"> — {program.name}</span>
+          {dict.programs.cta}
+          <span className="sr-only"> — {copy.name}</span>
           <ArrowRight
             aria-hidden="true"
             className="size-4 transition-transform duration-300 ease-out-soft group-hover/btn:translate-x-1"

@@ -3,7 +3,8 @@
 import { ArrowRight, Check, Layers } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { membership, site, type BillingPeriod } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import { site, type BillingPeriod } from "@/content/site";
 import type { MembershipPlanRow } from "@/lib/supabase/types";
 
 /* Fixed locale so the server and the browser format identically. */
@@ -23,6 +24,8 @@ type MembershipCardProps = {
  * contrast is what makes it read as "recommended" before a word is read.
  */
 export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) {
+  const { dict } = useI18n();
+  const t = dict.membership;
   const featured = plan.is_recommended;
   const pricePerMonth = period === "yearly" ? plan.yearly_price : plan.monthly_price;
   const priceUsd = Math.round(pricePerMonth / site.currency.usdRate);
@@ -35,7 +38,7 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
         "group relative flex h-full flex-col overflow-hidden rounded-[2px] p-8 md:p-9",
         "transition-[transform,box-shadow,border-color] duration-700 ease-gentle",
         // hairline that draws across the top edge on hover
-        "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left before:bg-brass before:transition-transform before:duration-700 before:ease-out-soft before:content-['']",
+        "before:absolute before:inset-x-0 before:top-0 before:h-px before:origin-left rtl:before:origin-right before:bg-brass before:transition-transform before:duration-700 before:ease-out-soft before:content-['']",
         featured
           ? cn(
               "border border-white/10 bg-gradient-to-b from-iron to-void text-chalk shadow-featured",
@@ -50,8 +53,8 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
       )}
     >
       {featured ? (
-        <span className="absolute right-8 top-8 rounded-[2px] bg-brass px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-void md:right-9">
-          Recommended
+        <span className="absolute end-8 top-8 rounded-[2px] bg-brass px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-void md:end-9">
+          {t.recommended}
         </span>
       ) : null}
 
@@ -104,7 +107,7 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
             featured ? "text-ash" : "text-graphite",
           )}
         >
-          {period === "yearly" ? "Per month · billed annually" : "Per month"}
+          {period === "yearly" ? t.perMonthAnnual : t.perMonth}
         </p>
 
         <p
@@ -113,7 +116,7 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
             featured ? "text-ash" : "text-graphite",
           )}
         >
-          ≈ ${priceUsd} / month
+          {t.approx} ${priceUsd}
         </p>
       </div>
 
@@ -127,7 +130,7 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
             )}
           >
             <Layers aria-hidden="true" className="size-3.5 shrink-0" />
-            Everything in {plan.inherits}
+            {t.everythingIn} {plan.inherits}
           </p>
         ) : null}
 
@@ -160,9 +163,9 @@ export function MembershipCard({ plan, period, onChoose }: MembershipCardProps) 
           className="w-full"
           onClick={() => onChoose(plan.slug, period)}
         >
-          {membership.cta}
+          {t.cta}
           {/* Gives each of the three buttons a unique name for screen readers. */}
-          <span className="sr-only"> — {plan.name} plan</span>
+          <span className="sr-only"> — {plan.name} {dict.booking.plan}</span>
           <ArrowRight
             aria-hidden="true"
             className="size-4 transition-transform duration-300 ease-out-soft group-hover/btn:translate-x-1"

@@ -1,14 +1,17 @@
 import { Clock, MapPin, Phone } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SocialIcon, SOCIAL_LABELS } from "@/components/ui/SocialIcon";
-import { footer, nav, programs, seo, site } from "@/content/site";
+import { getServerI18n } from "@/lib/i18n/server";
+import { programs, seo, site } from "@/content/site";
 
 const SOCIALS = [
   { platform: "instagram" as const, href: "https://instagram.com/ironhaus.erbil" },
   { platform: "facebook" as const, href: "https://facebook.com/ironhaus.erbil" },
 ];
 
-export function Footer() {
+export async function Footer() {
+  const { dict } = await getServerI18n();
+  const t = dict.footer;
   const year = new Date().getFullYear();
 
   return (
@@ -21,7 +24,7 @@ export function Footer() {
               {site.brand.name}
             </p>
             <p className="mt-4 max-w-[36ch] text-[15px] leading-relaxed text-ash">
-              {footer.blurb}
+              {t.blurb}
             </p>
 
             <ul className="mt-7 flex items-center gap-1">
@@ -40,31 +43,29 @@ export function Footer() {
           </div>
 
           {/* Navigation */}
-          {footer.columns.map((column) => (
-            <nav key={column.heading} aria-label={column.heading}>
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-brass">
-                {column.heading}
-              </h2>
-              <ul className="mt-4 flex flex-col">
-                {column.links.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className="inline-block rounded-[2px] py-2.5 text-[15px] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
+          <nav aria-label={t.explore}>
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-brass">
+              {t.explore}
+            </h2>
+            <ul className="mt-4 flex flex-col">
+              {dict.nav.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="inline-block rounded-[2px] py-2.5 text-[15px] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           {/* Programmes — read from the same array the section renders, so the
               footer can never list a programme that no longer exists. */}
           <div>
             <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-brass">
-              Programmes
+              {t.programmes}
             </h2>
             <ul className="mt-4 flex flex-col">
               {programs.map((program) => (
@@ -73,7 +74,7 @@ export function Footer() {
                     href="#programs"
                     className="inline-block rounded-[2px] py-2.5 text-[15px] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
                   >
-                    {program.name}
+                    {dict.programs.items[program.id].name}
                   </a>
                 </li>
               ))}
@@ -83,7 +84,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-brass">
-              {footer.contactHeading}
+              {t.visit}
             </h2>
             <ul className="mt-5 flex flex-col gap-4 text-[15px] text-ash">
               <li className="flex items-start gap-3">
@@ -116,14 +117,14 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col gap-4 border-t border-steel py-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ash">
-            &copy; {year} {site.brand.name}. {footer.legal}
+            &copy; {year} {site.brand.name}. {t.legal}
           </p>
 
           <a
-            href={footer.staffLink.href}
+            href="/admin/login"
             className="-my-2 inline-block rounded-[2px] py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ash transition-colors duration-500 ease-gentle hover:text-brass focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
           >
-            {footer.staffHeading} · {footer.staffLink.label}
+            {t.staff} · {t.dashboard}
           </a>
         </div>
       </Container>

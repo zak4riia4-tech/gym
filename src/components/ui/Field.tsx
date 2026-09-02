@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { booking } from "@/content/site";
+
 
 /* One shared control style, so the input, select and textarea below cannot
    drift apart visually. */
@@ -21,12 +21,14 @@ type FieldShellProps = {
   label: string;
   error?: string;
   optional?: boolean;
+  /** Translated word for "Optional". Passed in so this file stays copy-free. */
+  optionalLabel?: string;
   className?: string;
   children: ReactNode;
 };
 
 /** Label + control + error message, wired together for screen readers. */
-function FieldShell({ id, label, error, optional, className, children }: FieldShellProps) {
+function FieldShell({ id, label, error, optional, optionalLabel, className, children }: FieldShellProps) {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
       <label
@@ -34,7 +36,7 @@ function FieldShell({ id, label, error, optional, className, children }: FieldSh
         className="flex items-baseline gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ash"
       >
         {label}
-        {optional ? <span className="text-[10px] text-ash/70">{booking.optional}</span> : null}
+        {optional ? <span className="text-[10px] text-ash/70">{optionalLabel}</span> : null}
       </label>
 
       {children}
@@ -63,24 +65,25 @@ type BaseProps = {
   label: string;
   error?: string;
   optional?: boolean;
+  optionalLabel?: string;
   className?: string;
 };
 
 export function TextField({
-  id, label, error, optional, className, ...input
+  id, label, error, optional, optionalLabel, className, ...input
 }: BaseProps & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <FieldShell id={id} label={label} error={error} optional={optional} className={className}>
+    <FieldShell id={id} label={label} error={error} optional={optional} optionalLabel={optionalLabel} className={className}>
       <input {...a11yProps(id, error)} {...input} className={controlClasses(Boolean(error))} />
     </FieldShell>
   );
 }
 
 export function SelectField({
-  id, label, error, optional, className, children, ...select
+  id, label, error, optional, optionalLabel, className, children, ...select
 }: BaseProps & React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
-    <FieldShell id={id} label={label} error={error} optional={optional} className={className}>
+    <FieldShell id={id} label={label} error={error} optional={optional} optionalLabel={optionalLabel} className={className}>
       <select
         {...a11yProps(id, error)}
         {...select}
@@ -93,10 +96,10 @@ export function SelectField({
 }
 
 export function TextAreaField({
-  id, label, error, optional, className, ...textarea
+  id, label, error, optional, optionalLabel, className, ...textarea
 }: BaseProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
-    <FieldShell id={id} label={label} error={error} optional={optional} className={className}>
+    <FieldShell id={id} label={label} error={error} optional={optional} optionalLabel={optionalLabel} className={className}>
       <textarea
         {...a11yProps(id, error)}
         {...textarea}

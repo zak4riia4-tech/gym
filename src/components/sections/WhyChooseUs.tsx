@@ -1,7 +1,8 @@
 import { BadgeCheck, FileX, Gauge, Wrench, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { reasons, whySection, type ReasonIcon } from "@/content/site";
+import { getServerI18n } from "@/lib/i18n/server";
+import { reasons, type ReasonIcon } from "@/content/site";
 
 const ICONS: Record<ReasonIcon, LucideIcon> = {
   coaches: BadgeCheck,
@@ -18,7 +19,10 @@ const ICONS: Record<ReasonIcon, LucideIcon> = {
  * template. Here the heading holds the left column and stays put while the
  * reasons scroll past it — same content, completely different rhythm.
  */
-export function WhyChooseUs() {
+export async function WhyChooseUs() {
+  const { dict } = await getServerI18n();
+  const whySection = dict.why;
+
   return (
     <section
       id="why"
@@ -52,8 +56,9 @@ export function WhyChooseUs() {
           <ul className="flex flex-col">
             {reasons.map((reason, index) => {
               const Icon = ICONS[reason.icon];
+              const copy = whySection.reasons[reason.icon];
               return (
-                <Reveal key={reason.title} delay={100 + index * 90}>
+                <Reveal key={reason.icon} delay={100 + index * 90}>
                   <li className="flex gap-6 border-t border-steel py-8 first:pt-0 sm:gap-8 lg:py-10">
                     <span className="mt-1 inline-flex size-11 shrink-0 items-center justify-center rounded-[2px] border border-steel text-brass transition-colors duration-700 ease-gentle">
                       <Icon aria-hidden="true" className="size-5" />
@@ -61,10 +66,10 @@ export function WhyChooseUs() {
 
                     <div>
                       <h3 className="u-display text-[19px] font-extrabold uppercase leading-tight tracking-[0.03em] text-chalk md:text-[21px]">
-                        {reason.title}
+                        {copy.title}
                       </h3>
                       <p className="mt-3 max-w-[52ch] text-[15px] leading-relaxed text-ash md:text-[16px]">
-                        {reason.body}
+                        {copy.body}
                       </p>
                     </div>
                   </li>

@@ -2,7 +2,8 @@ import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import { Ledger } from "@/components/ui/Ledger";
 import { getActiveTrainers } from "@/lib/content/public-content";
-import { hero, programs, seo } from "@/content/site";
+import { getServerI18n } from "@/lib/i18n/server";
+import { heroMedia, programs, seo } from "@/content/site";
 
 /**
  * The opening statement.
@@ -13,7 +14,8 @@ import { hero, programs, seo } from "@/content/site";
  * other's way, so both can be read.
  */
 export async function Hero() {
-  const trainers = await getActiveTrainers();
+  const [trainers, { dict }] = await Promise.all([getActiveTrainers(), getServerI18n()]);
+  const hero = dict.hero;
 
   return (
     <section
@@ -73,9 +75,9 @@ export async function Hero() {
           <div className="hero-in mt-11 max-w-sm lg:mt-14" style={{ animationDelay: "780ms" }}>
             <Ledger
               items={[
-                { label: "Programmes", value: String(programs.length) },
-                { label: "Coaches", value: String(trainers.length) },
-                { label: "Open", value: seo.business.openingHours.replace("Mo-Sa ", "") },
+                { label: hero.ledger.programmes, value: String(programs.length) },
+                { label: hero.ledger.coaches, value: String(trainers.length) },
+                { label: hero.ledger.open, value: seo.business.openingHours.replace("Mo-Sa ", "") },
               ]}
             />
           </div>
@@ -85,7 +87,7 @@ export async function Hero() {
         <div className="hero-media relative lg:h-[92dvh]">
           <div className="relative aspect-4/5 w-full overflow-hidden rounded-[2px] lg:absolute lg:inset-y-0 lg:aspect-auto lg:h-full lg:w-[52vw] lg:rounded-none">
             <Image
-              src={hero.image}
+              src={heroMedia.image}
               alt={hero.imageAlt}
               fill
               // The largest thing on the screen and the LCP element, so it is
@@ -99,7 +101,7 @@ export async function Hero() {
                 a hard-edged box. */}
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-r from-void via-void/25 to-transparent lg:from-void lg:via-void/35"
+              className="absolute inset-0 bg-gradient-to-r from-void via-void/25 to-transparent rtl:bg-gradient-to-l lg:from-void lg:via-void/35"
             />
             <div
               aria-hidden="true"

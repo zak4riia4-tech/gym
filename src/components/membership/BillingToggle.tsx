@@ -1,12 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/context";
 import type { BillingPeriod } from "@/content/site";
-
-const OPTIONS: ReadonlyArray<{ value: BillingPeriod; label: string }> = [
-  { value: "monthly", label: "Monthly" },
-  { value: "yearly", label: "Yearly" },
-];
 
 type BillingToggleProps = {
   value: BillingPeriod;
@@ -23,20 +19,32 @@ type BillingToggleProps = {
  * free. The sliding pill is a separate, decorative element.
  */
 export function BillingToggle({ value, onChange, savingPercent }: BillingToggleProps) {
+  const { dict, dir } = useI18n();
+  const t = dict.membership;
+  const OPTIONS: ReadonlyArray<{ value: BillingPeriod; label: string }> = [
+    { value: "monthly", label: t.monthly },
+    { value: "yearly", label: t.yearly },
+  ];
   const isYearly = value === "yearly";
 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
       <fieldset className="min-w-0">
-        <legend className="sr-only">Billing period</legend>
+        <legend className="sr-only">{t.billingPeriod}</legend>
 
         <div className="relative flex items-center rounded-[2px] border border-void/15 bg-white p-1 shadow-card">
           {/* The pill that slides behind the selected label. */}
           <span
             aria-hidden="true"
-            style={{ transform: isYearly ? "translateX(100%)" : "translateX(0)" }}
+            /* The second option sits to the right in LTR and to the left in RTL,
+                   so the pill has to travel the other way. */
+            style={{
+              transform: isYearly
+                ? `translateX(${dir === "rtl" ? "-100%" : "100%"})`
+                : "translateX(0)",
+            }}
             className={cn(
-              "pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-[2px] bg-void",
+              "pointer-events-none absolute inset-y-1 start-1 w-[calc(50%-0.25rem)] rounded-[2px] bg-void",
               "transition-transform duration-[420ms] ease-out-soft motion-reduce:transition-none",
             )}
           />
@@ -71,7 +79,7 @@ export function BillingToggle({ value, onChange, savingPercent }: BillingToggleP
       <p aria-live="polite" className="flex min-h-6 min-w-[104px] items-center">
         {isYearly ? (
           <span className="save-badge inline-flex items-center rounded-[2px] bg-bronze px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-chalk">
-            Save {savingPercent}%
+            {t.save} {savingPercent}%
           </span>
         ) : null}
       </p>

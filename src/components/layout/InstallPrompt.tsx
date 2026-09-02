@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Share, SquarePlus, X } from "lucide-react";
-import { install } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
 
 /*
  * Two different install flows, because the platforms are not the same.
@@ -23,6 +23,8 @@ type BeforeInstallPromptEvent = Event & {
 const DISMISSED_KEY = "ironhaus:install-dismissed";
 
 export function InstallPrompt() {
+  const { dict } = useI18n();
+  const install = dict.install;
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [isIos, setIsIos] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -83,7 +85,7 @@ export function InstallPrompt() {
     <div
       role="dialog"
       aria-label={install.title}
-      className="fixed inset-x-3 bottom-3 z-50 rounded-[2px] border border-steel bg-iron p-4 shadow-featured sm:left-auto sm:right-4 sm:w-[22rem] lg:hidden"
+      className="fixed inset-x-3 bottom-3 z-50 rounded-[2px] border border-steel bg-iron p-4 shadow-featured sm:start-auto sm:end-4 sm:w-[22rem] lg:hidden"
     >
       <div className="flex items-start gap-3">
         <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-[2px] border border-brass/40 bg-brass/10 text-brass">
@@ -122,7 +124,7 @@ export function InstallPrompt() {
           type="button"
           onClick={dismiss}
           aria-label={install.dismiss}
-          className="-mr-1 -mt-1 inline-flex size-9 shrink-0 items-center justify-center rounded-[2px] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
+          className="-me-1 -mt-1 inline-flex size-9 shrink-0 items-center justify-center rounded-[2px] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
         >
           <X aria-hidden="true" className="size-4" />
         </button>

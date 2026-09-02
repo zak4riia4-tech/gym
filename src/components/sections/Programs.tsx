@@ -4,9 +4,13 @@ import { ProgramCard } from "@/components/programs/ProgramCard";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { programs, programsSection } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import { programs } from "@/content/site";
 
 export function Programs() {
+  const { dict } = useI18n();
+  const programsSection = dict.programs;
+
   /**
    * STEP 3 placeholder. A /programs/[id] page can be added later — this
    * function is the only thing that has to change when it is.

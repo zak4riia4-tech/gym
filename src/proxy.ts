@@ -1,17 +1,25 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { defaultLocale, isLocale, locales, matchLocale } from "@/lib/i18n/config";
+
+const LOCALE_COOKIE = "locale";
+const LOCALE_HEADER = "x-locale";
 
 /*
- * Two jobs:
- *   1. Keep the Supabase session cookie fresh on every admin request.
- *   2. Bounce signed-out visitors from /admin/* to the login page.
+ * Two jobs, split by path.
  *
- * Job 2 is CONVENIENCE, NOT SECURITY. Middleware has been bypassable in the
- * past, so it is never the only gate. The dashboard page re-checks the session
- * on the server, and Row Level Security blocks the data itself. This layer
- * exists so a signed-out visitor sees a login form instead of an empty screen.
+ * /admin/*  — keep the Supabase session cookie fresh and bounce signed-out
+ *             visitors to the login page. That redirect is CONVENIENCE, NOT
+ *             SECURITY: middleware has been bypassable in the past, so the
+ *             dashboard re-checks the session on the server and Row Level
+ *             Security blocks the data itself.
+ *
+ * everything else — make sure the URL carries a language, and tell the root
+ *             layout which one it is via a request header, so <html lang> and
+ *             <html dir> are correct on the very first byte.
  */
-export async function proxy(request: NextRequest) {
+
+async function handleAdmin(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -23,9 +31,7 @@ export async function proxy(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          for (const { name, value } of cookiesToSet) {
-            request.cookies.set(name, value);
-          }
+          for (const { name, value } of cookiesToSet) request.cookies.set(name, value);
           response = NextResponse.next({ request });
           for (const { name, value, options } of cookiesToSet) {
             response.cookies.set(name, value, options);
@@ -37,7 +43,9 @@ export async function proxy(request: NextRequest) {
 
   // getUser() revalidates the token with Supabase. getSession() only decodes
   // the cookie, which a client could have tampered with.
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
   const isLoginPage = pathname === "/admin/login";
@@ -54,10 +62,54 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // The dashboard is English only, so the header is fixed rather than detected.
+  response.headers.set(LOCALE_HEADER, defaultLocale);
   return response;
 }
 
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/admin")) return handleAdmin(request);
+
+  const segments = pathname.split("/").filter(Boolean);
+  const first = segments[0];
+
+  // Already carries a language: pass it through as a header.
+  if (first && isLocale(first)) {
+    const response = NextResponse.next({ request });
+    response.headers.set(LOCALE_HEADER, first);
+    // Remember the choice so a return visit to "/" lands in the same language.
+    response.cookies.set(LOCALE_COOKIE, first, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    return response;
+  }
+
+  // No language in the URL. Prefer a previous choice, then the browser's
+  // Accept-Language, then English.
+  const remembered = request.cookies.get(LOCALE_COOKIE)?.value;
+  const locale =
+    remembered && isLocale(remembered)
+      ? remembered
+      : matchLocale(request.headers.get("accept-language"));
+
+  const url = request.nextUrl.clone();
+  url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
+  return NextResponse.redirect(url);
+}
+
 export const config = {
-  // Only the admin area. The public site never runs this.
-  matcher: ["/admin/:path*"],
+  /*
+   * Everything except Next's own assets and the files that must be served from
+   * the site root — a manifest or robots.txt behind a language prefix would be
+   * invisible to browsers and crawlers.
+   */
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png|sw.js|manifest.webmanifest|robots.txt|sitemap.xml|icon-.*\\.png|apple-touch-icon\\.png).*)",
+  ],
 };
+
+export { locales };

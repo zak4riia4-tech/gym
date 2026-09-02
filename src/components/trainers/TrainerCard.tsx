@@ -4,7 +4,8 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { SocialIcon, SOCIAL_LABELS } from "@/components/ui/SocialIcon";
 import { Ledger } from "@/components/ui/Ledger";
-import { site, trainersSection } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import { site } from "@/content/site";
 import type { TrainerRow } from "@/lib/supabase/types";
 
 type TrainerCardProps = {
@@ -13,6 +14,7 @@ type TrainerCardProps = {
 };
 
 export function TrainerCard({ trainer, onViewProfile }: TrainerCardProps) {
+  const { dict } = useI18n();
   const headingId = `trainer-${trainer.id}`;
 
   /* Socials are two nullable columns now, so build the list from whatever the
@@ -24,8 +26,8 @@ export function TrainerCard({ trainer, onViewProfile }: TrainerCardProps) {
 
   /* Spec-sheet rows, skipping anything the owner left blank. */
   const ledgerItems = [
-    trainer.experience ? { label: "Experience", value: trainer.experience } : null,
-    trainer.certification ? { label: "Certified", value: trainer.certification } : null,
+    trainer.experience ? { label: dict.trainers.experience, value: trainer.experience } : null,
+    trainer.certification ? { label: dict.trainers.certified, value: trainer.certification } : null,
   ].filter((item) => item !== null);
 
   return (
@@ -114,7 +116,7 @@ export function TrainerCard({ trainer, onViewProfile }: TrainerCardProps) {
               "after:absolute after:inset-0 after:z-10 after:content-['']",
             ].join(" ")}
           >
-            {trainersSection.cta}
+            {dict.trainers.cta}
             <span className="sr-only"> of {trainer.full_name}</span>
             <ArrowUpRight
               aria-hidden="true"

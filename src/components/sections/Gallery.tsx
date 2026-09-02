@@ -2,7 +2,8 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { galleryImages, gallerySection } from "@/content/site";
+import { getServerI18n } from "@/lib/i18n/server";
+import { galleryImages } from "@/content/site";
 
 /**
  * The floor, in pictures.
@@ -12,7 +13,10 @@ import { galleryImages, gallerySection } from "@/content/site";
  * No lightbox — there is nothing to read in a larger version of a photograph,
  * and it would add a focus trap for no gain.
  */
-export function Gallery() {
+export async function Gallery() {
+  const { dict } = await getServerI18n();
+  const gallerySection = dict.gallery;
+
   return (
     <section
       id="gallery"

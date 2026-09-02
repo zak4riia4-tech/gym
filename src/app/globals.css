@@ -59,6 +59,39 @@
   --ease-gentle:   cubic-bezier(0.33, 1, 0.68, 1);
 }
 
+/* --------------------------------------------------------------------------
+   Right-to-left. Kurdish Sorani and Arabic share the Arabic script, so both
+   get the same treatment.
+   -------------------------------------------------------------------------- */
+[dir="rtl"] {
+  /* The Latin faces contain no Arabic glyphs at all. JetBrains keeps first
+     position for the mono role so Latin digits — prices, dates, times — still
+     render in it, with Plex Arabic picking up every Arabic glyph after it. */
+  --font-display: var(--font-arabic), system-ui, sans-serif;
+  --font-body: var(--font-arabic), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), var(--font-arabic), ui-monospace, monospace;
+}
+
+/* Letter-spacing breaks the Arabic script: the letters are joined, and adding
+   tracking pulls them apart into something close to unreadable. The design
+   leans on tracking heavily for its mono labels, so it has to be switched off
+   wholesale here rather than class by class. */
+[dir="rtl"] * {
+  letter-spacing: normal !important;
+}
+
+/* The wide-grotesque idea does not transfer to Arabic. Forcing a width axis
+   the face does not have just distorts it. */
+[dir="rtl"] .u-display {
+  font-variation-settings: normal;
+}
+
+/* The marquee travels left in both directions; in RTL it should run the other
+   way so it reads with the text rather than against it. */
+[dir="rtl"] .marquee-track {
+  animation-direction: reverse;
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;

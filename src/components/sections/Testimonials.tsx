@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { testimonials, testimonialsSection } from "@/content/site";
+import { getServerI18n } from "@/lib/i18n/server";
 
 /**
  * Three quotes, side by side, on the light surface.
@@ -12,7 +12,11 @@ import { testimonials, testimonialsSection } from "@/content/site";
  * This is the second light section on the page, placed here on purpose: after
  * the dark gallery it resets the eye before the closing call to action.
  */
-export function Testimonials() {
+export async function Testimonials() {
+  const { dict } = await getServerI18n();
+  const testimonialsSection = dict.testimonials;
+  const testimonials = dict.testimonials.items;
+
   return (
     <section
       id="testimonials"

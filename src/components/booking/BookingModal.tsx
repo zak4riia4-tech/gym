@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { BookingForm } from "@/components/booking/BookingForm";
-import { booking, type PlanId } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import type { PlanId } from "@/content/site";
 import type { MembershipPlanRow } from "@/lib/supabase/types";
 
 type BookingModalProps = {
@@ -23,6 +24,8 @@ type BookingModalProps = {
  * hand-rolled div modal has to reimplement and usually gets wrong.
  */
 export function BookingModal({ open, planId, plans, onClose }: BookingModalProps) {
+  const { dict } = useI18n();
+  const booking = dict.booking;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const plan = plans.find((p) => p.slug === planId);
 
@@ -101,7 +104,7 @@ export function BookingModal({ open, planId, plans, onClose }: BookingModalProps
 
         {plan ? (
           <p className="mt-5 inline-flex items-center gap-2 rounded-[2px] border border-brass/40 bg-brass/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-brass">
-            {plan.name} plan
+            {plan.name} {booking.plan}
           </p>
         ) : null}
 

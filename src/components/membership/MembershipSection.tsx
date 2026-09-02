@@ -7,7 +7,8 @@ import { MembershipCard } from "@/components/membership/MembershipCard";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { membership, YEARLY_SAVING_PERCENT, type BillingPeriod, type PlanId } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import { YEARLY_SAVING_PERCENT, type BillingPeriod, type PlanId } from "@/content/site";
 import type { MembershipPlanRow } from "@/lib/supabase/types";
 
 /**
@@ -19,6 +20,8 @@ import type { MembershipPlanRow } from "@/lib/supabase/types";
  * with each other — and why nothing here needs a page reload.
  */
 export function MembershipSection({ plans }: { plans: MembershipPlanRow[] }) {
+  const { dict } = useI18n();
+  const membership = dict.membership;
   const [period, setPeriod] = useState<BillingPeriod>("monthly");
 
   /** Which plan the booking dialog opens with. "" means the dialog is closed. */

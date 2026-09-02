@@ -12,7 +12,8 @@ import {
   type BookingFormErrors,
   type BookingFormValues,
 } from "@/lib/validation";
-import { booking, fitnessGoals, type PlanId } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
+import type { PlanId } from "@/content/site";
 import type { MembershipPlanRow } from "@/lib/supabase/types";
 
 /** idle -> submitting -> success | error. Drives every visual state below. */
@@ -26,6 +27,8 @@ type BookingFormProps = {
 };
 
 export function BookingForm({ initialPlan, plans, onDone }: BookingFormProps) {
+  const { locale, dict } = useI18n();
+  const booking = dict.booking;
   const [values, setValues] = useState<BookingFormValues>({
     ...EMPTY_BOOKING_FORM,
     membershipPlan: initialPlan,
@@ -46,7 +49,7 @@ export function BookingForm({ initialPlan, plans, onDone }: BookingFormProps) {
     event.preventDefault();
 
     // 1. Validate in the browser. Nothing is sent if anything is wrong.
-    const found = validateBooking(values, plans.map((p) => p.slug));
+    const found = validateBooking(values, plans.map((p) => p.slug), booking.errors);
     if (Object.keys(found).length > 0) {
       setErrors(found);
       setState("idle");
@@ -63,7 +66,7 @@ export function BookingForm({ initialPlan, plans, onDone }: BookingFormProps) {
 
     // 3. Send it to the server action, which re-validates and writes the row.
     //    Nothing about Supabase is bundled into this page as a result.
-    const result = await submitBooking(values);
+    const result = await submitBooking(values, locale);
 
     // 4. Report honestly. A failure is never dressed up as a success.
     if (!result.ok) {
@@ -164,7 +167,7 @@ export function BookingForm({ initialPlan, plans, onDone }: BookingFormProps) {
           disabled={submitting}
           onChange={(e) => update("membershipPlan", e.target.value as PlanId)}
         >
-          <option value="">{booking.goalPlaceholder}</option>
+          <option value="">{booking.selectPlaceholder}</option>
           {plans.map((plan) => (
             <option key={plan.id} value={plan.slug}>
               {plan.name}
@@ -177,13 +180,14 @@ export function BookingForm({ initialPlan, plans, onDone }: BookingFormProps) {
           label={booking.fields.fitnessGoal}
           name="fitnessGoal"
           optional
+          optionalLabel={booking.optional}
           value={values.fitnessGoal}
           error={errors.fitnessGoal}
           disabled={submitting}
           onChange={(e) => update("fitnessGoal", e.target.value)}
         >
-          <option value="">{booking.goalPlaceholder}</option>
-          {fitnessGoals.map((goal) => (
+          <option value="">{booking.selectPlaceholder}</option>
+          {booking.goals.map((goal) => (
             <option key={goal} value={goal}>
               {goal}
             </option>

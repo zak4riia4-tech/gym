@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { nav, site } from "@/content/site";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { useI18n } from "@/lib/i18n/context";
+import { site } from "@/content/site";
 
 /**
  * Fixed navigation.
@@ -13,6 +15,8 @@ import { nav, site } from "@/content/site";
  * whatever section is underneath without ever boxing in the hero image.
  */
 export function Navbar() {
+  const { dict } = useI18n();
+  const nav = dict.nav;
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -73,7 +77,9 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 sm:gap-3">
+          <LanguageSwitcher />
+
           <a
             href="#membership"
             className="hidden min-h-11 items-center rounded-[2px] bg-brass px-5 font-mono text-[11px] uppercase tracking-[0.16em] text-void transition-[background-color,box-shadow,transform] duration-500 ease-gentle hover:bg-ember hover:shadow-brass motion-safe:hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ember sm:inline-flex"

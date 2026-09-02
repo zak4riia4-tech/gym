@@ -4,10 +4,12 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TrainerCard } from "@/components/trainers/TrainerCard";
-import { trainersSection } from "@/content/site";
+import { useI18n } from "@/lib/i18n/context";
 import type { TrainerRow } from "@/lib/supabase/types";
 
 export function TrainersSection({ trainers }: { trainers: TrainerRow[] }) {
+  const { dict } = useI18n();
+  const trainersSection = dict.trainers;
   /**
    * STEP 3 placeholder. Every trainer already carries a `slug`, so a future
    * /trainers/[slug] page needs nothing more than a router push here.

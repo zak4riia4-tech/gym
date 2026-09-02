@@ -36,7 +36,7 @@ export function MembershipSection({ plans }: { plans: MembershipPlanRow[] }) {
     <section
       id="membership"
       aria-labelledby="membership-heading"
-      className="bg-chalk py-24 md:py-32 lg:py-40"
+      className="scroll-mt-24 bg-chalk py-24 md:py-32 lg:py-40"
     >
       <Container>
         {/* Heading left, toggle right — the asymmetric layout from the

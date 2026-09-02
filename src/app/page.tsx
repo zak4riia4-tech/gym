@@ -1,8 +1,13 @@
+import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { CallToAction } from "@/components/sections/CallToAction";
+import { Gallery } from "@/components/sections/Gallery";
 import { Hero } from "@/components/sections/Hero";
 import { Membership } from "@/components/sections/Membership";
 import { Programs } from "@/components/sections/Programs";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { Trainers } from "@/components/sections/Trainers";
+import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { seo, site } from "@/content/site";
 
 /*
@@ -63,12 +68,20 @@ export default function Home() {
       <Navbar />
 
       {/* The page's single h1 now lives visibly in the hero, where it belongs. */}
+      {/* Section order follows the plan approved in step one. Dark and light
+          alternate so the page has rhythm rather than one long dark scroll. */}
       <main id="main">
         <Hero />
+        <WhyChooseUs />
         <Programs />
         <Membership />
         <Trainers />
+        <Gallery />
+        <Testimonials />
+        <CallToAction />
       </main>
+
+      <Footer />
     </>
   );
 }

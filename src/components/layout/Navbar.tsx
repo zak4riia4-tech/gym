@@ -54,7 +54,7 @@ export function Navbar() {
       >
         <a
           href="#main"
-          className="u-display rounded-[2px] text-[17px] font-extrabold uppercase tracking-[0.08em] text-chalk transition-colors duration-500 ease-gentle hover:text-brass focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember"
+          className="u-display -my-2 inline-block rounded-[2px] py-2 text-[17px] font-extrabold uppercase tracking-[0.08em] text-chalk transition-colors duration-500 ease-gentle hover:text-brass focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
         >
           {site.brand.name}
         </a>
@@ -65,7 +65,7 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="rounded-[2px] font-mono text-[11px] uppercase tracking-[0.18em] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember"
+                className="-my-2 inline-block rounded-[2px] py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ash transition-colors duration-500 ease-gentle hover:text-chalk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
               >
                 {link.label}
               </a>

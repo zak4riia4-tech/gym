@@ -62,6 +62,15 @@ export async function submitBooking(
   if (error) {
     console.error("[booking] insert failed", error);
 
+    // The database rate-limit trigger. Its message is deliberately vague to a
+    // script but useful to a person who genuinely sent a second request.
+    if (error.message?.includes("booking_rate_limit")) {
+      return {
+        ok: false,
+        message:
+          "We already have a request from these details today. A coach will call you — no need to send another.",
+      };
+    }
     if (error.code === "23514") {
       return { ok: false, message: "The gym's system rejected one of your details. Please review the form." };
     }

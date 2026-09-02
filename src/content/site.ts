@@ -235,6 +235,7 @@ export const nav = {
     { label: "Programmes", href: "#programs" },
     { label: "Membership", href: "#membership" },
     { label: "Trainers", href: "#trainers" },
+    { label: "The floor", href: "#gallery" },
   ],
   cta: "Join now",
   openMenu: "Open menu",
@@ -256,4 +257,156 @@ export const hero = {
   imageAlt: "The squat racks on the training floor at IRONHAUS, Erbil",
   image:
     "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1600&q=80",
+};
+
+/* ==========================================================================
+   WHY CHOOSE US
+   ========================================================================== */
+
+export type ReasonIcon = "coaches" | "contract" | "equipment" | "space";
+
+export const whySection = {
+  eyebrow: "Why here",
+  title: "Four reasons people stay.",
+  description:
+    "Not promises — the things members actually mention when they are asked why they have not left.",
+};
+
+export const reasons: { icon: ReasonIcon; title: string; body: string }[] = [
+  {
+    icon: "coaches",
+    title: "Coaches who still train",
+    body: "Every coach on this floor holds a current certification and competes or plays themselves. Nobody here is reading your programme off a screen.",
+  },
+  {
+    icon: "contract",
+    title: "No contract, no joining fee",
+    body: "Cancel whenever you like. We would rather keep you by being worth the money each month than by making it awkward to leave.",
+  },
+  {
+    icon: "equipment",
+    title: "Equipment that holds up",
+    body: "Calibrated bars, plates that are the weight they claim, and racks that get serviced instead of taped up.",
+  },
+  {
+    icon: "space",
+    title: "Room to actually train",
+    body: "Memberships are capped. At seven in the evening you are warming up, not queuing for a rack.",
+  },
+];
+
+/* ==========================================================================
+   GALLERY
+   ========================================================================== */
+
+export const gallerySection = {
+  eyebrow: "The floor",
+  title: "This is the room.",
+  description:
+    "No stock photography of somewhere else. Replace these with your own once the gym has been shot.",
+};
+
+/** Placeholder photography. Swap for the gym's own images before launch. */
+export const galleryImages: { src: string; alt: string; span: string }[] = [
+  {
+    src: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80",
+    alt: "Dumbbell rack along the wall of the training floor",
+    span: "md:col-span-2 md:row-span-2",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=900&q=80",
+    alt: "The main training floor seen from the entrance",
+    span: "",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=80",
+    alt: "A lifter setting up over a loaded barbell",
+    span: "",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1596357395217-80de13130e92?auto=format&fit=crop&w=900&q=80",
+    alt: "A member working through a set in the squat rack",
+    span: "md:col-span-2",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=80",
+    alt: "Close view of hands gripping a loaded bar",
+    span: "md:col-span-2",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=900&q=80",
+    alt: "A member training on the machine floor",
+    span: "md:col-span-2",
+  },
+];
+
+/* ==========================================================================
+   TESTIMONIALS
+   ========================================================================== */
+
+export const testimonialsSection = {
+  eyebrow: "Members",
+  title: "What people actually say.",
+};
+
+export const testimonials: { quote: string; name: string; detail: string }[] = [
+  {
+    quote:
+      "I had trained for six years and thought I knew what I was doing. Aram rebuilt my deadlift in one session and the back pain I had lived with just stopped.",
+    name: "Rêbin Salih",
+    detail: "Member since 2021",
+  },
+  {
+    quote:
+      "The classes are the only reason I still turn up in January. Small groups, and the coach actually watches you instead of counting reps at the front.",
+    name: "Hana Mahmud",
+    detail: "Member since 2023",
+  },
+  {
+    quote:
+      "I came back after knee surgery expecting to be told to take it easy for a year. Instead they built the whole programme around it and I squat more now than before.",
+    name: "Karzan Ali",
+    detail: "Member since 2022",
+  },
+];
+
+/* ==========================================================================
+   CALL TO ACTION
+   ========================================================================== */
+
+export const ctaSection = {
+  eyebrow: "First session",
+  title: "Come in and try the floor.",
+  description:
+    "Your first session is free. Meet a coach, walk the room, lift something. No card, no sign-up, no follow-up calls unless you ask for them.",
+  primary: "Book a free session",
+  secondary: "Call the gym",
+  image:
+    "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1600&q=80",
+  imageAlt: "",
+};
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+export const footer = {
+  blurb:
+    "A coached strength and conditioning gym in Erbil. Open six days a week, staffed every hour we are open.",
+  columns: [
+    {
+      heading: "Explore",
+      links: [
+        { label: "Programmes", href: "#programs" },
+        { label: "Membership", href: "#membership" },
+        { label: "Trainers", href: "#trainers" },
+        { label: "The floor", href: "#gallery" },
+      ],
+    },
+  ],
+  contactHeading: "Visit",
+  staffHeading: "Staff",
+  staffLink: { label: "Dashboard", href: "/admin/login" },
+  legal: "All rights reserved.",
+  builtNote: "Placeholder address and phone number — replace before launch.",
 };

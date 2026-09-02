@@ -17,7 +17,7 @@ export function Testimonials() {
     <section
       id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="scroll-mt-24 bg-chalk py-24 md:py-32 lg:py-40"
+      className="scroll-mt-24 bg-chalk py-16 md:py-28 lg:py-40"
     >
       <Container>
         {/* Centred and larger than the other section headings — the page has

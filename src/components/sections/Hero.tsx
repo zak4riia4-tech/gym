@@ -22,14 +22,14 @@ export async function Hero() {
     >
       <div className="mx-auto grid w-full max-w-[1280px] items-center gap-12 px-6 pb-20 md:px-10 lg:min-h-[92dvh] lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-12 lg:pb-0">
         {/* ---------------- Left: the statement ---------------- */}
-        <div className="lg:py-28">
+        <div className="pb-4 lg:py-28">
           <p className="hero-in font-mono text-[11px] uppercase tracking-[0.24em] text-brass" style={{ animationDelay: "80ms" }}>
             {hero.eyebrow}
           </p>
 
           <h1
             id="hero-heading"
-            className="u-display mt-7 text-[clamp(2.6rem,8.5vw,5.2rem)] font-extrabold uppercase leading-[0.92] text-chalk"
+            className="u-display mt-7 text-[clamp(3.1rem,11vw,5.2rem)] font-extrabold uppercase leading-[0.92] text-chalk"
           >
             {/* Each line masks its own reveal, so the headline assembles itself
                 rather than fading in as one block. */}
@@ -52,7 +52,7 @@ export async function Hero() {
             {hero.description}
           </p>
 
-          <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "660ms" }}>
+          <div className="hero-in mt-9 flex flex-col gap-3 sm:flex-row lg:mt-10" style={{ animationDelay: "660ms" }}>
             <a
               href="#membership"
               className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[2px] bg-brass px-7 font-mono text-[12px] uppercase tracking-[0.16em] text-void transition-[background-color,box-shadow,transform] duration-500 ease-gentle hover:bg-ember hover:shadow-brass motion-safe:hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ember"
@@ -70,7 +70,7 @@ export async function Hero() {
 
           {/* The ledger motif, opening the site as it will close every card.
               Counted from real data — nothing invented. */}
-          <div className="hero-in mt-14 max-w-sm" style={{ animationDelay: "780ms" }}>
+          <div className="hero-in mt-11 max-w-sm lg:mt-14" style={{ animationDelay: "780ms" }}>
             <Ledger
               items={[
                 { label: "Programmes", value: String(programs.length) },

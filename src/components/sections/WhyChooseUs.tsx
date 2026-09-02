@@ -23,7 +23,7 @@ export function WhyChooseUs() {
     <section
       id="why"
       aria-labelledby="why-heading"
-      className="scroll-mt-24 bg-void py-24 md:py-32 lg:py-40"
+      className="scroll-mt-24 bg-void py-16 md:py-28 lg:py-40"
     >
       <Container>
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">

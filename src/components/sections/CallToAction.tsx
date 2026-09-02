@@ -16,7 +16,7 @@ export function CallToAction() {
     <section
       id="join"
       aria-labelledby="cta-heading"
-      className="relative scroll-mt-24 overflow-hidden bg-void py-28 md:py-36 lg:py-44"
+      className="relative scroll-mt-24 overflow-hidden bg-void py-20 md:py-32 lg:py-44"
     >
       {/* Background photograph, held well back so the type stays the subject. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">

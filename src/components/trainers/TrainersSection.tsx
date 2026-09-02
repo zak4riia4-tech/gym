@@ -20,7 +20,7 @@ export function TrainersSection({ trainers }: { trainers: TrainerRow[] }) {
     <section
       id="trainers"
       aria-labelledby="trainers-heading"
-      className="scroll-mt-24 u-ambient bg-void py-24 md:py-32 lg:py-40"
+      className="scroll-mt-24 u-ambient bg-void py-16 md:py-28 lg:py-40"
     >
       <Container>
         <Reveal>
@@ -33,9 +33,9 @@ export function TrainersSection({ trainers }: { trainers: TrainerRow[] }) {
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 sm:gap-8 lg:mt-20 lg:grid-cols-4">
+        <div className="u-rail -mx-6 mt-14 gap-5 px-6 pb-2 md:-mx-10 md:px-10 lg:mx-0 lg:mt-20 lg:grid-cols-4 lg:gap-8 lg:px-0 lg:pb-0">
           {trainers.map((trainer, index) => (
-            <Reveal key={trainer.id} delay={120 + index * 80} className="h-full">
+            <Reveal key={trainer.id} delay={120 + index * 80} className="h-full w-[72vw] shrink-0 sm:w-[46vw] lg:w-auto">
               <TrainerCard trainer={trainer} onViewProfile={handleViewProfile} />
             </Reveal>
           ))}

@@ -211,6 +211,37 @@ body::after {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Card rail. On a phone a set of four full-width cards is four screens of
+   scrolling that nobody does. The same set on a sideways rail is one screen,
+   the images stay large, and a peek of the next card tells you it moves.
+   Becomes an ordinary grid from lg up.
+
+   `position: relative` matters — sr-only text inside the cards is absolutely
+   positioned, and a static scroll container does not clip it, so it escapes
+   and stretches the whole page sideways.
+   -------------------------------------------------------------------------- */
+.u-rail {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.u-rail::-webkit-scrollbar { display: none; }
+
+.u-rail > * { scroll-snap-align: start; }
+
+@media (min-width: 1024px) {
+  .u-rail {
+    display: grid;
+    overflow: visible;
+  }
+}
+
 .u-surface {
   border: 1px solid rgb(255 240 220 / 0.07);
   background-image: linear-gradient(to bottom, #1B1711 0%, #131009 100%);

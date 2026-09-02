@@ -15,7 +15,7 @@ export function MarqueeBand() {
   return (
     <div
       aria-hidden="true"
-      className="relative overflow-hidden border-y border-steel bg-void py-7 select-none"
+      className="relative overflow-hidden border-y border-steel bg-void py-5 select-none md:py-7"
     >
       <div className="marquee-track flex w-max items-center gap-10">
         {/* Rendered twice: the animation travels exactly half the track, so the

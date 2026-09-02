@@ -36,7 +36,7 @@ export function SectionHeading({
       <h2
         id={id}
         className={cn(
-          "u-display mt-6 text-[clamp(2.15rem,5.5vw,4rem)] font-extrabold uppercase leading-[0.93]",
+          "u-display mt-6 text-[clamp(2rem,7.5vw,4rem)] font-extrabold uppercase leading-[0.93]",
           light ? "text-void" : "text-chalk",
         )}
       >
@@ -46,7 +46,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "mt-6 text-[16px] leading-relaxed md:text-[17px]",
+            "mt-5 text-[16px] leading-relaxed md:mt-6 md:text-[17px]",
             light ? "text-graphite" : "text-ash",
           )}
         >

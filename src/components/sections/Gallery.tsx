@@ -17,7 +17,7 @@ export function Gallery() {
     <section
       id="gallery"
       aria-labelledby="gallery-heading"
-      className="u-ambient scroll-mt-24 bg-void py-24 md:py-32 lg:py-40"
+      className="u-ambient scroll-mt-24 bg-void py-16 md:py-28 lg:py-40"
     >
       <Container>
         <Reveal>
@@ -36,7 +36,7 @@ export function Gallery() {
           That single break is what stops the page reading as one long column. */}
       <div className="px-2 lg:px-3">
 
-        <div className="mt-14 grid auto-rows-[13rem] grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 md:auto-rows-[12rem] lg:mt-20 lg:auto-rows-[15rem] lg:gap-3">
+        <div className="mt-14 grid auto-rows-[8.5rem] grid-cols-2 gap-2 sm:auto-rows-[11rem] md:grid-cols-4 md:auto-rows-[12rem] lg:mt-20 lg:auto-rows-[15rem] lg:gap-3">
           {galleryImages.map((image, index) => (
             <Reveal
               key={image.src}

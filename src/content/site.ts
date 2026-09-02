@@ -225,3 +225,35 @@ export const seo = {
     openingHours: "Mo-Sa 06:00-23:00",
   },
 };
+
+/* ==========================================================================
+   NAVBAR + HERO
+   ========================================================================== */
+
+export const nav = {
+  links: [
+    { label: "Programmes", href: "#programs" },
+    { label: "Membership", href: "#membership" },
+    { label: "Trainers", href: "#trainers" },
+  ],
+  cta: "Join now",
+  openMenu: "Open menu",
+  closeMenu: "Close menu",
+};
+
+export const hero = {
+  eyebrow: "Hewlêr · Est. 2019",
+  /* Three lines, set one per line in the wide display face. Anti-hype on
+     purpose: the whole brand voice is about turning up, not about slogans. */
+  headline: ["Strength", "is a habit,", "not a mood."],
+  description:
+    "A coached strength and conditioning gym in Erbil. Barbell floor, group classes and one-to-one coaching. No joining fee, no contract.",
+  primaryCta: "Join now",
+  secondaryCta: "View memberships",
+  /* Only facts we can actually source: programmes and coaches are counted from
+     the database, the hours come from seo.business. Nothing invented. */
+  scrollHint: "Scroll",
+  imageAlt: "The squat racks on the training floor at IRONHAUS, Erbil",
+  image:
+    "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1600&q=80",
+};

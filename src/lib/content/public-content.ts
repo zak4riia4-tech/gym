@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getPublicSupabase } from "@/lib/supabase/public";
 import type { MembershipPlanRow, TrainerRow } from "@/lib/supabase/types";
 
@@ -9,7 +10,9 @@ import type { MembershipPlanRow, TrainerRow } from "@/lib/supabase/types";
  * filter were ever dropped, the database would still hold the line.
  */
 
-export async function getActivePlans(): Promise<MembershipPlanRow[]> {
+/* cache() memoises per request, so the Hero and the Membership section asking
+   for plans in the same render produces ONE database round trip, not two. */
+export const getActivePlans = cache(async (): Promise<MembershipPlanRow[]> => {
   const { data, error } = await getPublicSupabase()
     .from("membership_plans")
     .select("*")
@@ -21,9 +24,9 @@ export async function getActivePlans(): Promise<MembershipPlanRow[]> {
     return [];
   }
   return data ?? [];
-}
+});
 
-export async function getActiveTrainers(): Promise<TrainerRow[]> {
+export const getActiveTrainers = cache(async (): Promise<TrainerRow[]> => {
   const { data, error } = await getPublicSupabase()
     .from("trainers")
     .select("*")
@@ -35,4 +38,4 @@ export async function getActiveTrainers(): Promise<TrainerRow[]> {
     return [];
   }
   return data ?? [];
-}
+});

@@ -27,7 +27,7 @@ export const en = {
     primaryCta: "Join now",
     secondaryCta: "View memberships",
     scrollHint: "Scroll",
-    imageAlt: "The squat racks on the training floor at IRONHAUS, Erbil",
+    imageAlt: "The squat racks on the training floor at GO FIT GYM, Erbil",
     ledger: { programmes: "Programmes", coaches: "Coaches", open: "Open" },
   },
 
@@ -260,10 +260,10 @@ export const en = {
   },
 
   seo: {
-    title: "IRONHAUS — Strength & Conditioning Gym in Erbil",
+    title: "GO FIT GYM — Strength & Conditioning Gym in Erbil",
     description:
       "A coached strength and conditioning gym in Erbil. Barbell training, group classes and personal coaching, with membership plans from 35,000 IQD a month.",
-    ogTitle: "IRONHAUS — Train with a purpose",
+    ogTitle: "GO FIT GYM — Train with a purpose",
     ogDescription:
       "Coached strength training in Erbil. Four programmes, three membership plans, no joining fee and no contract.",
   },

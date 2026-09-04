@@ -1,4 +1,4 @@
-# IRONHAUS — Gym Website & Management System
+# GO FIT GYM — Gym Website & Management System
 
 A production-ready website for a gym, with a public marketing site and a secure
 staff dashboard behind it. Built to be resold: all branding and copy live in one

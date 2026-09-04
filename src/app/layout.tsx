@@ -55,14 +55,14 @@ export const metadata: Metadata = {
   title: {
     default: seo.title,
     // Sub-pages set only their own name and inherit the brand suffix.
-    template: "%s — IRONHAUS",
+    template: "%s — GO FIT GYM",
   },
   description: seo.description,
-  applicationName: "IRONHAUS",
+  applicationName: "GO FIT GYM",
   openGraph: {
     type: "website",
     url: seo.siteUrl,
-    siteName: "IRONHAUS",
+    siteName: "GO FIT GYM",
     title: seo.ogTitle,
     description: seo.ogDescription,
   },
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "IRONHAUS",
+    title: "GO FIT GYM",
     statusBarStyle: "black-translucent",
   },
   other: {

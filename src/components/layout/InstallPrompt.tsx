@@ -20,7 +20,7 @@ type BeforeInstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 };
 
-const DISMISSED_KEY = "ironhaus:install-dismissed";
+const DISMISSED_KEY = "gofitgym:install-dismissed";
 
 export function InstallPrompt() {
   const { dict } = useI18n();

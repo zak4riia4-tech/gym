@@ -5,8 +5,8 @@ import { getServerI18n } from "@/lib/i18n/server";
 import { programs, seo, site } from "@/content/site";
 
 const SOCIALS = [
-  { platform: "instagram" as const, href: "https://instagram.com/ironhaus.erbil" },
-  { platform: "facebook" as const, href: "https://facebook.com/ironhaus.erbil" },
+  { platform: "instagram" as const, href: "https://instagram.com/gofitgym.erbil" },
+  { platform: "facebook" as const, href: "https://facebook.com/gofitgym.erbil" },
 ];
 
 export async function Footer() {

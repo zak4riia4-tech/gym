@@ -6,7 +6,7 @@
 
 export const site = {
   brand: {
-    name: "IRONHAUS",
+    name: "GO FIT GYM",
     city: "Erbil",
   },
   currency: {
@@ -188,18 +188,18 @@ export const fitnessGoals: string[] = [
 export const seo = {
   /** Used for canonical URLs and social previews. Set NEXT_PUBLIC_SITE_URL in production. */
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  title: "IRONHAUS — Strength & Conditioning Gym in Erbil",
+  title: "GO FIT GYM — Strength & Conditioning Gym in Erbil",
   /** Kept under ~160 characters so search engines show all of it. */
   description:
     "A coached strength and conditioning gym in Erbil. Barbell training, group classes and personal coaching, with membership plans from 35,000 IQD a month.",
   /** Shown in link previews on WhatsApp, Facebook and Instagram. */
-  ogTitle: "IRONHAUS — Train with a purpose",
+  ogTitle: "GO FIT GYM — Train with a purpose",
   ogDescription:
     "Coached strength training in Erbil. Four programmes, three membership plans, no joining fee and no contract.",
   locale: "en_GB",
   /** Local-business details. Used for the structured data block. */
   business: {
-    legalName: "IRONHAUS Gym",
+    legalName: "GO FIT GYM",
     streetAddress: "100 Meter Road",
     city: "Erbil",
     region: "Kurdistan Region",
@@ -237,7 +237,7 @@ export const heroMedia = {
   /* Only facts we can actually source: programmes and coaches are counted from
      the database, the hours come from seo.business. Nothing invented. */
   scrollHint: "Scroll",
-  imageAlt: "The squat racks on the training floor at IRONHAUS, Erbil",
+  imageAlt: "The squat racks on the training floor at GO FIT GYM, Erbil",
   image:
     "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1600&q=80",
 };

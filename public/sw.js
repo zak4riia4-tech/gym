@@ -9,7 +9,7 @@
  * a stale price, so the network always wins when it is available; the cache
  * only steps in when the phone is offline.
  */
-const CACHE = "ironhaus-v1";
+const CACHE = "gofitgym-v1";
 const OFFLINE_FALLBACK = "/";
 
 self.addEventListener("install", (event) => {

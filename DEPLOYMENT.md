@@ -1,4 +1,4 @@
-# Deployment checklist — IRONHAUS
+# Deployment checklist — GO FIT GYM
 
 Work top to bottom. Nothing here is optional for a site a real gym depends on.
 
@@ -38,8 +38,7 @@ Security entirely.
 
 - [ ] Change the admin password (Authentication → Users). The seeded one is in
       `ADMIN_CREDENTIALS.local.txt`.
-- [ ] Replace `admin@ironhaus.iq` with a **real address you control**, otherwise
-      password reset can never reach you.
+- [x] The admin email is a real address you control, so password reset works.
 - [ ] Add each staff member: create the user, then insert a row in
       `public.admins` with their `user_id`. There is no sign-up form by design.
 - [ ] Replace the placeholder trainer photos. The current ones are stock images

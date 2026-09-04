@@ -14,3 +14,7 @@ supabase/.temp
 ADMIN_CREDENTIALS.local.txt
 
 .vercel
+
+# Test artefacts
+.playwright-mcp/
+shot-*.png

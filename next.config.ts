@@ -37,7 +37,23 @@ const nextConfig: NextConfig = {
         source: "/admin/:path*",
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
+      {
+        // The pitch page is sent by link, one reader at a time. Indexing it
+        // would put a Kurdish sales page in the gym's search results.
+        source: "/demo",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
     ];
+  },
+
+  /*
+   * The pitch page is a single self-contained file in /public, so it is served
+   * as /demo.html. This is only about the link the gym owner sends a client:
+   * "/demo" reads like something made on purpose, "/demo.html" reads like a
+   * file someone left on a server.
+   */
+  async rewrites() {
+    return [{ source: "/demo", destination: "/demo.html" }];
   },
 
   images: {

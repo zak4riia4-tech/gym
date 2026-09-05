@@ -106,9 +106,14 @@ export const config = {
    * Everything except Next's own assets and the files that must be served from
    * the site root — a manifest or robots.txt behind a language prefix would be
    * invisible to browsers and crawlers.
+   *
+   * `demo` covers /demo, /demo.html and /demo-og.jpg: the pitch page is a
+   * standalone document that carries its own three languages, so sending it
+   * through the locale redirect would only bounce it to a URL that does not
+   * exist.
    */
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png|sw.js|manifest.webmanifest|robots.txt|sitemap.xml|icon-.*\\.png|apple-touch-icon\\.png).*)",
+    "/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png|sw.js|manifest.webmanifest|robots.txt|sitemap.xml|icon-.*\\.png|apple-touch-icon\\.png|demo).*)",
   ],
 };
 

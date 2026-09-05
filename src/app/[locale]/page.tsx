@@ -40,7 +40,10 @@ export async function generateMetadata({
   const dict = getDictionary(locale);
 
   return {
-    title: dict.seo.title,
+    // `absolute` opts out of the layout's "%s — GO FIT GYM" suffix. The
+    // translated title already carries the brand, so inheriting the template
+    // would print it twice.
+    title: { absolute: dict.seo.title },
     description: dict.seo.description,
     openGraph: { title: dict.seo.ogTitle, description: dict.seo.ogDescription },
     twitter: { title: dict.seo.ogTitle, description: dict.seo.ogDescription },
